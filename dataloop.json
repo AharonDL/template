@@ -1,6 +1,6 @@
 {
   "id": "2",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "creator": "aharon@dataloop.ai",
   "name": "test-model-dpk",
   "displayName": "test-model-dpk",
@@ -10,7 +10,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/AharonDL/template.git",
-    "gitTag": "v1.0.9"
+    "gitTag": "v1.0.10"
   },
   "scope": "organization",
   "components": {
@@ -32,9 +32,7 @@
       {
         "panelNames": [],
         "name": "app-service-install",
-        "initParams": {
-          "model_entity": "my-model-with-service"
-        },
+        "initParams": {},
         "runtime": {
           "podType": "regular-xs",
           "numReplicas": 0,
@@ -68,7 +66,7 @@
         "initInputs": [
           {
             "name": "model_entity",
-            "type": "String"
+            "type": "Model"
           }
         ],
         "functions": [
