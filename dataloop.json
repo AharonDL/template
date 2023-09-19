@@ -1,6 +1,6 @@
 {
   "id": "2",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "creator": "aharon@dataloop.ai",
   "name": "test-model-dpk",
   "displayName": "test-model-dpk",
@@ -10,7 +10,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/AharonDL/template.git",
-    "gitTag": "v1.0.10"
+    "gitTag": "v1.0.11"
   },
   "scope": "organization",
   "components": {
@@ -26,7 +26,7 @@
         },
         "maxAttempts": 13,
         "moduleName": "my-adapter",
-        "modelOperation": "train",
+        "modelOperation": "deploy",
         "operation": "none"
       },
       {
@@ -39,7 +39,7 @@
           "concurrency": 20
         },
         "maxAttempts": 5,
-        "moduleName": "my-adapter",
+        "moduleName": "my-adapter-with-service",
         "modelOperation": "deploy",
         "operation": "install"
       }
@@ -47,7 +47,7 @@
     "models": [
       {
         "name": "my-model-with-service",
-        "moduleName": "my-adapter",
+        "moduleName": "my-adapter-with-service",
         "status": "trained",
         "operationType": "deploy"
       },
@@ -55,12 +55,99 @@
         "name": "my-model-no-service",
         "moduleName": "my-adapter",
         "status": "trained",
-        "operationType": "train"
+        "operationType": "deploy"
       }
     ],
     "modules": [
       {
         "name": "my-adapter",
+        "entryPoint": "main.py",
+        "className": "ServiceRunner",
+        "initInputs": [
+          {
+            "name": "model_entity",
+            "type": "Model"
+          }
+        ],
+        "functions": [
+          {
+            "name": "evaluate_model",
+            "input": [
+              {
+                "type": "Model",
+                "name": "model"
+              },
+              {
+                "type": "Dataset",
+                "name": "dataset"
+              },
+              {
+                "type": "Json",
+                "name": "filters"
+              }
+            ],
+            "output": [],
+            "displayName": "Evaluate a Model",
+            "displayIcon": ""
+          },
+          {
+            "name": "predict_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset"
+              },
+              {
+                "type": "Json",
+                "name": "filters"
+              }
+            ],
+            "output": [],
+            "displayName": "Predict Dataset with DQL",
+            "displayIcon": ""
+          },
+          {
+            "name": "predict_items",
+            "input": [
+              {
+                "type": "Item[]",
+                "name": "items"
+              }
+            ],
+            "output": [
+              {
+                "type": "Item[]",
+                "name": "items"
+              },
+              {
+                "type": "Annotation[]",
+                "name": "annotations"
+              }
+            ],
+            "displayName": "Predict Items",
+            "displayIcon": ""
+          },
+          {
+            "name": "train_model",
+            "input": [
+              {
+                "type": "Model",
+                "name": "model"
+              }
+            ],
+            "output": [
+              {
+                "type": "Model",
+                "name": "model"
+              }
+            ],
+            "displayName": "Train a Model",
+            "displayIcon": ""
+          }
+        ]
+      },
+      {
+        "name": "my-adapter-with-service",
         "entryPoint": "main.py",
         "className": "ServiceRunner",
         "initInputs": [
