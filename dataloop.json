@@ -1,110 +1,144 @@
 {
   "id": "2",
-  "version": "1.0.13",
-  "creator": "shlomi.s@dataloop.ai",
-  "name": "dataloop-email-channel",
-  "displayName": "dataloop-email-channel",
-  "description": "dataloop notifications email channel",
+  "version": "1.0.2",
+  "creator": "aharon@dataloop.ai",
+  "name": "test-model-dpk",
+  "displayName": "test-model-dpk",
+  "description": "test-model-dpk",
   "icon": "icon-dl-sdk-documentation",
-  "categories": [
-    "dataloop-email-channel"
-  ],
+  "categories": [],
   "codebase": {
     "type": "git",
-    "gitUrl": "https://github.com/dataloop-ai/notification-email-channel",
-    "gitTag": "v1.0.13"
+    "gitUrl": "https://github.com/AharonDL/template.git",
+    "gitTag": "v1.0.2"
   },
   "scope": "organization",
   "components": {
-    "panels": [],
-    "channels": [
-      {
-        "name": "Email",
-        "description": "Send notifications via email",
-        "global": true,
-        "metadata": {
-          "serviceName": "dataloop-email-channel",
-          "functionName": "email",
-          "codebase": {
-            "type": "git",
-            "gitUrl": "https://github.com/dataloop-ai/notification-email-channel"
-          }
-        },
-        "context": {
-          "org": "dataloop-global",
-          "project": "dataloop-global",
-          "creator": "dataloop-global"
-        },
-        "filters": [
-          {
-            "frequency": {
-              "type": "rate",
-              "value": 3600
-            },
-            "context": {
-              "org": "dataloop-global",
-              "project": "dataloop-global",
-              "creator": "dataloop-global"
-            }
-          }
-        ]
-      }
-    ],
-    "hooks": [],
-    "modules": [
-      {
-        "name": "dataloop-email-channel",
-        "functions": [
-          {
-            "name": "email",
-            "input": [
-              {
-                "type": "Json",
-                "name": "input"
-              }
-            ],
-            "description": "dataloop notifications email channel",
-            "displayName": "dataloop-email-channel"
-          }
-        ]
-      }
-    ],
     "services": [
       {
-        "name": "dataloop-email-channel",
         "panelNames": [],
+        "name": "app-service=-none",
         "initParams": {},
-        "packageName": "default-package",
-        "packageRevision": "latest",
-        "secrets": [],
-        "botUserName": "pipelines@dataloop.ai",
         "runtime": {
           "podType": "regular-xs",
-          "numReplicas": 1,
-          "concurrency": 10,
-          "pyPackages": {},
-          "runnerImage": "gcr.io/viewo-g/piper/agent/runner/cpu/node14:latest",
-          "singleAgent": false,
-          "autoscaler": {
-            "type": "rabbitmq",
-            "minReplicas": 1,
-            "maxReplicas": 10,
-            "queueLength": 10
-          },
-          "preemptible": false,
-          "executionTimeout": 3600,
-          "drainTime": 600,
-          "onReset": "failed",
-          "runExecutionAsProcess": false
+          "numReplicas": 0,
+          "concurrency": 30
         },
-        "moduleName": "dataloop-email-channel",
-        "maxAttempts": 3
+        "maxAttempts": 13,
+        "moduleName": "my-adapter",
+        "modelOperation": "deploy",
+        "operation": "none"
+      },
+      {
+        "panelNames": [],
+        "name": "app-service-install",
+        "initParams": {},
+        "runtime": {
+          "podType": "regular-xs",
+          "numReplicas": 0,
+          "concurrency": 20
+        },
+        "maxAttempts": 5,
+        "moduleName": "my-adapter",
+        "modelOperation": "deploy",
+        "operation": "install"
       }
     ],
-    "triggers": [],
-    "pipelines": [],
-    "models": [],
-    "snapshots": []
-  },
-  "trusted": true
+    "models": [
+      {
+        "name": "my-model-with-service",
+        "moduleName": "my-adapter",
+        "operationType": "deploy"
+      },
+      {
+        "name": "my-model-no-service",
+        "moduleName": "my-adapter",
+        "operationType": "deploy"
+      }
+    ],
+    "modules": [
+      {
+        "name": "my-adapter",
+        "entryPoint": "main.py",
+        "className": "ServiceRunner",
+        "initInputs": [],
+        "functions": [
+          {
+            "name": "evaluate_model",
+            "input": [
+              {
+                "type": "Model",
+                "name": "model"
+              },
+              {
+                "type": "Dataset",
+                "name": "dataset"
+              },
+              {
+                "type": "Json",
+                "name": "filters"
+              }
+            ],
+            "output": [],
+            "displayName": "Evaluate a Model",
+            "displayIcon": ""
+          },
+          {
+            "name": "predict_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset"
+              },
+              {
+                "type": "Json",
+                "name": "filters"
+              }
+            ],
+            "output": [],
+            "displayName": "Predict Dataset with DQL",
+            "displayIcon": ""
+          },
+          {
+            "name": "predict_items",
+            "input": [
+              {
+                "type": "Item[]",
+                "name": "items"
+              }
+            ],
+            "output": [
+              {
+                "type": "Item[]",
+                "name": "items"
+              },
+              {
+                "type": "Annotation[]",
+                "name": "annotations"
+              }
+            ],
+            "displayName": "Predict Items",
+            "displayIcon": ""
+          },
+          {
+            "name": "train_model",
+            "input": [
+              {
+                "type": "Model",
+                "name": "model"
+              }
+            ],
+            "output": [
+              {
+                "type": "Model",
+                "name": "model"
+              }
+            ],
+            "displayName": "Train a Model",
+            "displayIcon": ""
+          }
+        ]
+      }
+    ]
+  }
 }
