@@ -1,6 +1,6 @@
 {
   "id": "2",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "creator": "aharon@dataloop.ai",
   "name": "test-model-dpk",
   "displayName": "test-model-dpk",
@@ -10,14 +10,14 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/AharonDL/template.git",
-    "gitTag": "v1.0.3"
+    "gitTag": "v1.0.4"
   },
   "scope": "organization",
   "components": {
     "services": [
       {
         "panelNames": [],
-        "name": "app-service=-none",
+        "name": "app-service-none",
         "initParams": {},
         "runtime": {
           "podType": "regular-xs",
