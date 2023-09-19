@@ -1,6 +1,6 @@
 {
   "id": "2",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "creator": "aharon@dataloop.ai",
   "name": "test-model-dpk",
   "displayName": "test-model-dpk",
@@ -10,7 +10,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/AharonDL/template.git",
-    "gitTag": "v1.0.4"
+    "gitTag": "v1.0.5"
   },
   "scope": "organization",
   "components": {
@@ -48,11 +48,13 @@
       {
         "name": "my-model-with-service",
         "moduleName": "my-adapter",
-        "operationType": "train"
+        "status": "trained",
+        "operationType": "deploy"
       },
       {
         "name": "my-model-no-service",
         "moduleName": "my-adapter",
+        "status": "trained",
         "operationType": "deploy"
       }
     ],
